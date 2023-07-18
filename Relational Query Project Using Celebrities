@@ -1,0 +1,101 @@
+CREATE TABLE Famous_People (id INTEGER PRIMARY KEY,
+    first_name TEXT,
+    last_name TEXT,
+    job INTEGER,
+    sign TEXT,
+    spouse INTEGER);
+    
+INSERT INTO Famous_People (first_name, last_name, job, sign, spouse)
+    VALUES ("Gwen", "Stefani", "2", "9", "Blake Shelton");
+INSERT INTO Famous_People (first_name, last_name, job, sign)
+    VALUES ("Kendrick", "Lamar", "2", "5");
+INSERT INTO Famous_People (first_name, last_name, job, sign, spouse)
+    VALUES ("Blake", "Shelton", "2", "5", "Gwen Stefani");
+INSERT INTO Famous_People (first_name, last_name, job, sign, spouse)
+    VALUES ("Taylor", "Swift", "2", "11", "Matt Healy");
+INSERT INTO Famous_People (first_name, last_name, job, sign, spouse)
+    VALUES ("Justin", "Bieber", "2", "2", "Hailey Bieber");
+INSERT INTO Famous_People (first_name, last_name, job, sign, spouse)
+    VALUES ("Matt", "Healy", "2", "3", "Taylor Swift");
+INSERT INTO Famous_People (first_name, last_name, job, sign)
+    VALUES ("Christian", "Bale", "1", "1");
+INSERT INTO Famous_People (first_name, last_name, job, sign)
+    VALUES ("Florence", "Pugh", "1", "12");
+INSERT INTO Famous_People (first_name, last_name, job, sign, spouse)
+    VALUES ("Hailey", "Bieber", "4", "11", "Justin Bieber");
+INSERT INTO Famous_People (first_name, last_name, job, sign)
+    VALUES ("Bella", "Hadid", "4", "9");
+INSERT INTO Famous_People (first_name, last_name, job, sign)
+    VALUES ("Margot", "Robbie", "1", "6");
+INSERT INTO Famous_People (first_name, last_name, job, sign, spouse)
+    VALUES ("Gabrielle", "Union", "1",             "10", "Dwyane Wade");
+INSERT INTO Famous_People (first_name, last_name, job, sign)
+    VALUES ("Lionel", "Messi", "3", "6");
+INSERT INTO Famous_People (first_name, last_name, job, sign, spouse)
+    VALUES ("Dwyane", "Wade", "3", "12", "Gabrielle Union");
+INSERT INTO Famous_People (first_name, last_name, job, sign)
+    VALUES ("Kendall", "Jenner", "4", "10");
+INSERT INTO Famous_People (first_name, last_name, job, sign)
+    VALUES ("Simone", "Biles", "3", "2");
+    
+CREATE TABLE job (id INTEGER PRIMARY KEY, job_id INTEGER, title TEXT);
+
+INSERT INTO job (job_id, title) VALUES (1, "Actor");
+INSERT INTO job (job_id, title) VALUES (2, "Singer");
+INSERT INTO job (job_id, title) VALUES (3, "Athlete");
+INSERT INTO job (job_id, title) VALUES (4, "Model");
+
+CREATE TABLE sign (id INTEGER PRIMARY KEY, sign_id INTEGER, title TEXT);
+INSERT INTO sign (sign_id, title) VALUES (1, "Aquarius");
+INSERT INTO sign (sign_id, title) VALUES (2, "Pisces");
+INSERT INTO sign (sign_id, title) VALUES (3, "Aries");
+INSERT INTO sign (sign_id, title) VALUES (4, "Taurus");
+INSERT INTO sign (sign_id, title) VALUES (5, "Gemini");
+INSERT INTO sign (sign_id, title) VALUES (6, "Cancer");
+INSERT INTO sign (sign_id, title) VALUES (7, "Leo");
+INSERT INTO sign (sign_id, title) VALUES (8, "Virgo");
+INSERT INTO sign (sign_id, title) VALUES (9, "Libra");
+INSERT INTO sign (sign_id, title) VALUES (10, "Scorpio");
+INSERT INTO sign (sign_id, title) VALUES (11, "Sagittarius");
+INSERT INTO sign (sign_id, title) VALUES (12, "Capricorn");
+
+/* cross join */
+SELECT * FROM Famous_People, job, sign;
+
+/* implicit inner join */
+SELECT J.title, F.first_name, F.last_name
+FROM Famous_People F
+JOIN job J
+ON J.id = F.job;
+
+/* explicit inner join */
+SELECT J.title, F.first_name, F.last_name
+FROM Famous_People F
+JOIN job J
+ON J.id = F.job
+WHERE J.id = '1';
+
+/* implicit outer join */
+SELECT F.first_name, F.last_name, F.spouse
+FROM Famous_People F;
+
+/* explicit outer join */
+SELECT J.title, F.first_name, F.last_name
+FROM Famous_People F
+LEFT OUTER JOIN job J
+ON F.job = J.id
+GROUP BY J.id;
+
+/* implicit multiple joins */
+SELECT F.first_name, F.last_name, S.title
+FROM Famous_People F
+JOIN sign S
+ON F.id = S.id;
+
+/* explicit multiple joins */
+SELECT J.title, j.job_id
+FROM job J
+JOIN Famous_People F
+ON F.job = J.title
+JOIN sign S
+ON S.title = F.sign
